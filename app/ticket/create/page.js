@@ -81,10 +81,10 @@ export default function CreateTicketPage() {
       <div className="flex items-center gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">
-            Tambah Tiket Baru
+            Create Parking Ticket
           </h1>
           <p className="text-gray-600 mt-1">
-            Buat tiket parkir untuk kendaraan baru
+            Create a parking ticket for a new vehicle
           </p>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function CreateTicketPage() {
               htmlFor="number_plate"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Nomor Plat Kendaraan
+              Number Plate <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -123,12 +123,12 @@ export default function CreateTicketPage() {
               htmlFor="parking_id"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Lokasi Parkir
+              Parking Location <span className="text-red-500">*</span>
             </label>
             {loadingParkir ? (
               <div className="flex items-center gap-2 text-gray-500">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
-                <span className="text-sm">Memuat data parkir...</span>
+                <span className="text-sm">Loading parking data...</span>
               </div>
             ) : (
               <select
@@ -139,7 +139,7 @@ export default function CreateTicketPage() {
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                 required
               >
-                <option value="">Pilih lokasi parkir</option>
+                <option value="">Select parking location</option>
                 {parkirOptions.map((parkir) => (
                   <option key={parkir.id} value={parkir.id}>
                     {parkir.parking_number}
@@ -149,7 +149,7 @@ export default function CreateTicketPage() {
             )}
             {!loadingParkir && parkirOptions.length === 0 && (
               <p className="mt-2 text-sm text-red-600">
-                Tidak ada lokasi parkir yang tersedia
+                No parking locations available.
               </p>
             )}
           </div>
@@ -162,11 +162,12 @@ export default function CreateTicketPage() {
               </div>
               <div>
                 <h3 className="text-sm font-medium text-blue-900">
-                  Informasi Check-in
+                  Check-in Information
                 </h3>
                 <p className="mt-1 text-sm text-blue-700">
-                  Waktu check-in akan otomatis tercatat saat tiket dibuat.
-                  Pastikan nomor plat dan lokasi parkir sudah benar.
+                  Check-in time will be automatically recorded when the ticket
+                  is created. Make sure the number plate and parking location
+                  are correct.
                 </p>
               </div>
             </div>
@@ -182,12 +183,12 @@ export default function CreateTicketPage() {
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Menyimpan...</span>
+                  <span>Saving...</span>
                 </>
               ) : (
                 <>
                   <Save size={16} />
-                  <span>Simpan Tiket</span>
+                  <span>Save</span>
                 </>
               )}
             </button>
@@ -195,7 +196,7 @@ export default function CreateTicketPage() {
               href="/ticket"
               className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
             >
-              Batal
+              Cancel
             </Link>
           </div>
         </form>

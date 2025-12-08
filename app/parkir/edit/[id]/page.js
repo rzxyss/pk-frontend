@@ -86,10 +86,10 @@ export default function EditParkirPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">
-            Edit Data Parkir
+            Update Parking Lot Data
           </h1>
           <p className="text-gray-600 mt-1">
-            Update data parkir yang sudah ada
+            Update existing parking lot data in the system
           </p>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function EditParkirPage() {
               htmlFor="parking_number"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Nomor Parkir <span className="text-red-500">*</span>
+              Parking Number <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -122,7 +122,7 @@ export default function EditParkirPage() {
               htmlFor="is_used"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Status Penggunaan <span className="text-red-500">*</span>
+              Status <span className="text-red-500">*</span>
             </label>
             <select
               id="is_used"
@@ -181,13 +181,13 @@ export default function EditParkirPage() {
               className="flex items-center gap-2 px-6 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-medium"
             >
               <Save size={18} />
-              {loading ? "Menyimpan..." : "Update Data"}
+              {loading ? "Saving..." : "Update"}
             </button>
             <Link
               href="/parkir"
               className="px-6 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
-              Batal
+              Cancel
             </Link>
           </div>
         </form>

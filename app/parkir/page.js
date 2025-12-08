@@ -73,11 +73,9 @@ export default function ParkirPage() {
       {/* Page header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">
-            Monitoring Parkir
-          </h1>
+          <h1 className="text-2xl font-semibold text-gray-900">Parking Lot</h1>
           <p className="text-gray-600 mt-1">
-            Pantau aktivitas parkir secara real-time
+            Management Parking Lot Configuration
           </p>
         </div>
 
@@ -86,7 +84,7 @@ export default function ParkirPage() {
           className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
         >
           <Plus size={16} />
-          Tambah Data
+          Add Parking Lot
         </Link>
       </div>
 
@@ -100,7 +98,7 @@ export default function ParkirPage() {
           <div className="px-6 py-4 border-b border-gray-200">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <h2 className="text-lg font-semibold text-gray-900">
-                Data Parkir
+                Parking Lot Data
               </h2>
               <div className="flex gap-2">
                 {statusOptions.map((opt) => (
@@ -212,10 +210,10 @@ export default function ParkirPage() {
           <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-600">
-                Menampilkan {filteredData.length} dari {parkirData.length} data
+                Displaying {filteredData.length} of {parkirData.length} data
               </p>
               <div className="text-sm text-gray-600">
-                Terakhir diperbarui: {new Date().toLocaleString("id-ID")}
+                Last updated: {new Date().toLocaleString("id-ID")}
               </div>
             </div>
           </div>
