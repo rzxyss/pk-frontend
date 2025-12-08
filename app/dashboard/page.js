@@ -4,7 +4,7 @@ import { Users, ShoppingCart, DollarSign, TrendingUp } from "lucide-react";
 export default function DashboardPage() {
   const stats = [
     {
-      title: "Total Users",
+      title: "Total Parkir",
       value: "2,543",
       change: "12.5%",
       trend: "up",

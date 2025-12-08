@@ -11,11 +11,13 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  ParkingCircle,
 } from "lucide-react";
 import { useSidebar } from "@/contexts/SidebarContext";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  { icon: ParkingCircle, label: "Parkir", href: "/parkir" },
   { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
   { icon: Users, label: "Users", href: "/dashboard/users" },
   { icon: FileText, label: "Reports", href: "/dashboard/reports" },
