@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
 import { Save } from "lucide-react";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function EditParkirPage() {
   const router = useRouter();
@@ -37,8 +38,13 @@ export default function EditParkirPage() {
       setFetchLoading(false);
     } catch (error) {
       console.error("Error fetching parkir data:", error);
-      alert("Gagal memuat data parkir");
-      router.push("/parkir");
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to load parking data",
+      }).then(() => {
+        router.push("/parkir");
+      });
     }
   };
 
@@ -59,14 +65,24 @@ export default function EditParkirPage() {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir/${params.id}`,
         formData
       );
-      alert("Data parkir berhasil diupdate!");
-      router.push("/parkir");
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Parking data updated successfully!",
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => {
+        router.push("/parkir");
+      });
     } catch (error) {
       console.error("Error updating parkir:", error);
-      alert(
-        "Gagal mengupdate data parkir: " +
-          (error.response?.data?.message || error.message)
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text:
+          "Failed to update parking data: " +
+          (error.response?.data?.message || error.message),
+      });
     } finally {
       setLoading(false);
     }

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Car, CheckCircle, XCircle, Plus, Trash2, LogOut } from "lucide-react";
 import axios from "axios";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function TicketPage() {
   const [ticketData, setTicketData] = useState([]);
@@ -56,20 +57,40 @@ export default function TicketPage() {
         }
       );
       setGateStatus(action);
-      alert(`Gate berhasil di-${action}!`);
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: `Gate has been ${action}ed successfully!`,
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (error) {
       console.error("Error controlling gate:", error);
-      alert(
-        "Gagal mengontrol gate: " +
-          (error.response?.data?.message || error.message)
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text:
+          "Failed to control gate: " +
+          (error.response?.data?.message || error.message),
+      });
     } finally {
       setGateLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus tiket ini?")) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -77,19 +98,39 @@ export default function TicketPage() {
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tickets/${id}`
       );
-      alert("Tiket berhasil dihapus!");
+      Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        text: "Ticket has been deleted successfully!",
+        timer: 2000,
+        showConfirmButton: false,
+      });
       fetchTicketData();
     } catch (error) {
       console.error("Error deleting ticket:", error);
-      alert(
-        "Gagal menghapus tiket: " +
-          (error.response?.data?.message || error.message)
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text:
+          "Failed to delete ticket: " +
+          (error.response?.data?.message || error.message),
+      });
     }
   };
 
   const handleCheckout = async (id) => {
-    if (!confirm("Apakah Anda yakin ingin checkout tiket ini?")) {
+    const result = await Swal.fire({
+      title: "Confirm Checkout",
+      text: "Are you sure you want to checkout this ticket?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, checkout!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -106,15 +147,24 @@ export default function TicketPage() {
         }
       );
 
-      alert("Checkout berhasil!");
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Checkout completed successfully!",
+        timer: 2000,
+        showConfirmButton: false,
+      });
       fetchTicketData();
       fetchGateStatus();
     } catch (error) {
       console.error("Error checkout ticket:", error);
-      alert(
-        "Gagal checkout tiket: " +
-          (error.response?.data?.message || error.message)
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text:
+          "Failed to checkout ticket: " +
+          (error.response?.data?.message || error.message),
+      });
     }
   };
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Save, Car } from "lucide-react";
 import axios from "axios";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function CreateTicketPage() {
   const router = useRouter();
@@ -63,14 +64,24 @@ export default function CreateTicketPage() {
         }
       );
 
-      alert("Tiket berhasil dibuat! Gate dibuka otomatis.");
-      router.push("/ticket");
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Ticket created successfully! Gate opened automatically.",
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => {
+        router.push("/ticket");
+      });
     } catch (error) {
       console.error("Error creating ticket:", error);
-      alert(
-        "Gagal membuat tiket: " +
-          (error.response?.data?.message || error.message)
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text:
+          "Failed to create ticket: " +
+          (error.response?.data?.message || error.message),
+      });
       setLoading(false);
     }
   };

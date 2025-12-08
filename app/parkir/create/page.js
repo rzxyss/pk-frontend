@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Save } from "lucide-react";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function CreateParkirPage() {
   const router = useRouter();
@@ -33,14 +34,24 @@ export default function CreateParkirPage() {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir`,
         formData
       );
-      alert("Data parkir berhasil ditambahkan!");
-      router.push("/parkir");
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Parking data added successfully!",
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => {
+        router.push("/parkir");
+      });
     } catch (error) {
       console.error("Error creating parkir:", error);
-      alert(
-        "Gagal menambahkan data parkir: " +
-          (error.response?.data?.message || error.message)
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text:
+          "Failed to add parking data: " +
+          (error.response?.data?.message || error.message),
+      });
     } finally {
       setLoading(false);
     }

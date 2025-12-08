@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import axios from "axios";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function ParkirPage() {
   const [parkirData, setParkirData] = useState([]);
@@ -38,7 +39,18 @@ export default function ParkirPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -46,14 +58,23 @@ export default function ParkirPage() {
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir/${id}`
       );
-      alert("Data parkir berhasil dihapus!");
+      Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        text: "Parking data has been deleted successfully!",
+        timer: 2000,
+        showConfirmButton: false,
+      });
       fetchParkirData();
     } catch (error) {
       console.error("Error deleting parkir:", error);
-      alert(
-        "Gagal menghapus data parkir: " +
-          (error.response?.data?.message || error.message)
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text:
+          "Failed to delete parking data: " +
+          (error.response?.data?.message || error.message),
+      });
     }
   };
 
