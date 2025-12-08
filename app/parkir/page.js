@@ -1,16 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Car,
-  Clock,
-  Calendar,
-  MapPin,
-  DollarSign,
-  Plus,
-  Edit,
-  Trash2,
-} from "lucide-react";
+import { Plus, Edit, Trash2 } from "lucide-react";
 import axios from "axios";
 import Link from "next/link";
 
@@ -28,7 +19,7 @@ export default function ParkirPage() {
   const fetchParkirData = async () => {
     try {
       const response = await axios.get(
-        "https://pk-backend.vercel.app/api/parkir"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir`
       );
       const data = response.data.data.map((item) => ({
         id: item.id,
@@ -52,7 +43,9 @@ export default function ParkirPage() {
     }
 
     try {
-      await axios.delete(`https://pk-backend.vercel.app/api/parkir/${id}`);
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir/${id}`
+      );
       alert("Data parkir berhasil dihapus!");
       fetchParkirData();
     } catch (error) {

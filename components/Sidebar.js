@@ -4,24 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  Users,
-  Settings,
-  FileText,
-  BarChart3,
   ChevronLeft,
   ChevronRight,
   X,
   ParkingCircle,
+  Ticket,
 } from "lucide-react";
 import { useSidebar } from "@/contexts/SidebarContext";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
   { icon: ParkingCircle, label: "Parkir", href: "/parkir" },
-  { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
-  { icon: Users, label: "Users", href: "/dashboard/users" },
-  { icon: FileText, label: "Reports", href: "/dashboard/reports" },
-  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+  { icon: Ticket, label: "Ticket", href: "/ticket" },
 ];
 
 export default function Sidebar() {
@@ -50,10 +44,10 @@ export default function Sidebar() {
         <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm font-semibold">A</span>
+              <span className="text-white text-sm font-semibold">PK</span>
             </div>
             {!isCollapsed && (
-              <span className="font-semibold text-gray-900">Admin</span>
+              <span className="font-semibold text-gray-900">Parking Team</span>
             )}
           </div>
 

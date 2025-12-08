@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
-import { ArrowLeft, Save } from "lucide-react";
+import { Save } from "lucide-react";
 import Link from "next/link";
 
 export default function EditParkirPage() {
@@ -25,7 +25,7 @@ export default function EditParkirPage() {
   const fetchParkirData = async () => {
     try {
       const response = await axios.get(
-        `https://pk-backend.vercel.app/api/parkir/${params.id}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir/${params.id}`
       );
       const data = response.data.data;
       setFormData({
@@ -56,7 +56,7 @@ export default function EditParkirPage() {
 
     try {
       await axios.put(
-        `https://pk-backend.vercel.app/api/parkir/${params.id}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir/${params.id}`,
         formData
       );
       alert("Data parkir berhasil diupdate!");
@@ -92,13 +92,6 @@ export default function EditParkirPage() {
             Update data parkir yang sudah ada
           </p>
         </div>
-        <Link
-          href="/parkir"
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          <ArrowLeft size={16} />
-          Kembali
-        </Link>
       </div>
 
       {/* Form */}

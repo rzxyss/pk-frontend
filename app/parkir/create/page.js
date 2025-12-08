@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { ArrowLeft, Save } from "lucide-react";
+import { Save } from "lucide-react";
 import Link from "next/link";
 
 export default function CreateParkirPage() {
@@ -29,7 +29,10 @@ export default function CreateParkirPage() {
     setLoading(true);
 
     try {
-      await axios.post("https://pk-backend.vercel.app/api/parkir", formData);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/parkir`,
+        formData
+      );
       alert("Data parkir berhasil ditambahkan!");
       router.push("/parkir");
     } catch (error) {
@@ -55,13 +58,6 @@ export default function CreateParkirPage() {
             Tambahkan data parkir baru ke sistem
           </p>
         </div>
-        <Link
-          href="/parkir"
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          <ArrowLeft size={16} />
-          Kembali
-        </Link>
       </div>
 
       {/* Form */}
