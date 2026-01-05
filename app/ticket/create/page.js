@@ -71,6 +71,9 @@ export default function CreateTicketPage() {
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
+        axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/gate/control`, {
+          action: "open",
+        });
         router.push("/ticket");
       });
     } catch (error) {
