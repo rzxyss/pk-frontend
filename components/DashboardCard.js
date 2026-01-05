@@ -25,7 +25,7 @@ export default function DashboardCard({
       </div>
 
       {/* Change indicator */}
-      {change && (
+      {/* {change && (
         <div className="flex items-center gap-1">
           <span
             className={`text-sm font-medium ${
@@ -36,7 +36,7 @@ export default function DashboardCard({
           </span>
           <span className="text-sm text-gray-500">vs last month</span>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
