@@ -9,6 +9,7 @@ import {
   X,
   ParkingCircle,
   Ticket,
+  Users,
 } from "lucide-react";
 import { useSidebar } from "@/contexts/SidebarContext";
 
@@ -16,6 +17,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
   { icon: ParkingCircle, label: "Parkir", href: "/parkir" },
   { icon: Ticket, label: "Ticket", href: "/ticket" },
+  { icon: Users, label: "User", href: "/user" },
 ];
 
 export default function Sidebar() {
@@ -65,7 +67,7 @@ export default function Sidebar() {
           <ul className="space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon;
-              const isActive = pathname === item.href;
+              const isActive = pathname.startsWith(item.href);
 
               return (
                 <li key={item.href}>
