@@ -171,13 +171,28 @@ export default function TicketPage() {
   const formatDate = (dateString) => {
     if (!dateString) return "-";
     const date = new Date(dateString);
-    return date.toLocaleString("id-ID", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${day} ${month} ${year}, ${hours}:${minutes}`;
   };
 
   const filteredData =
@@ -365,7 +380,30 @@ export default function TicketPage() {
                 Showing {filteredData.length} of {ticketData.length} entries
               </p>
               <div className="text-sm text-gray-600">
-                Last updated: {new Date().toLocaleString("id-ID")}
+                Last updated:{" "}
+                {(() => {
+                  const date = new Date();
+                  const months = [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                  ];
+                  const day = String(date.getDate()).padStart(2, "0");
+                  const month = months[date.getMonth()];
+                  const year = date.getFullYear();
+                  const hours = String(date.getHours()).padStart(2, "0");
+                  const minutes = String(date.getMinutes()).padStart(2, "0");
+                  return `${day} ${month} ${year}, ${hours}:${minutes}`;
+                })()}
               </div>
             </div>
           </div>

@@ -11,6 +11,33 @@ export default function ParkirPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState(2);
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${day} ${month} ${year}, ${hours}:${minutes}`;
+  };
+
   useEffect(() => {
     fetchParkirData();
     const interval = setInterval(fetchParkirData, 5000);
@@ -201,7 +228,7 @@ export default function ParkirPage() {
                       {item.trig}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {item.update_at}
+                      {formatDate(item.update_at)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                       <div className="flex items-center gap-2">
@@ -234,7 +261,30 @@ export default function ParkirPage() {
                 Displaying {filteredData.length} of {parkirData.length} data
               </p>
               <div className="text-sm text-gray-600">
-                Last updated: {new Date().toLocaleString("id-ID")}
+                Last updated:{" "}
+                {(() => {
+                  const date = new Date();
+                  const months = [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                  ];
+                  const day = String(date.getDate()).padStart(2, "0");
+                  const month = months[date.getMonth()];
+                  const year = date.getFullYear();
+                  const hours = String(date.getHours()).padStart(2, "0");
+                  const minutes = String(date.getMinutes()).padStart(2, "0");
+                  return `${day} ${month} ${year}, ${hours}:${minutes}`;
+                })()}
               </div>
             </div>
           </div>

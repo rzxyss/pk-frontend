@@ -15,6 +15,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -22,28 +23,28 @@ export default function DashboardPage() {
   const [ticketData, setTicketData] = useState([]);
   const [stats, setStats] = useState([
     {
-      title: "Total Parkir Aktif",
+      title: "Total Active Parking",
       value: "0",
       change: "0%",
       trend: "up",
       icon: Car,
     },
     {
-      title: "Total Tiket",
+      title: "Total Tickets",
       value: "0",
       change: "0%",
       trend: "up",
       icon: Ticket,
     },
     {
-      title: "Tiket Aktif",
+      title: "Active Tickets",
       value: "0",
       change: "0%",
       trend: "up",
       icon: DollarSign,
     },
     {
-      title: "Kapasitas Parkir",
+      title: "Parking Capacity",
       value: "0%",
       change: "0%",
       trend: "up",
@@ -93,31 +94,31 @@ export default function DashboardPage() {
 
     const date = new Date(dateString);
     const months = [
-      "Januari",
-      "Februari",
-      "Maret",
-      "April",
-      "Mei",
-      "Juni",
-      "Juli",
-      "Agustus",
-      "September",
-      "Oktober",
-      "November",
-      "Desember",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
 
-    const day = date.getDate();
+    const day = String(date.getDate()).padStart(2, "0");
     const month = months[date.getMonth()];
     const year = date.getFullYear();
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
-    return `${day} ${month} ${year} ${hours}:${minutes}`;
+    return `${day} ${month} ${year}, ${hours}:${minutes}`;
   };
 
   const calculateRevenue7Days = (tickets) => {
-    const days = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const revenue = {};
 
     // Initialize last 7 days
@@ -181,28 +182,28 @@ export default function DashboardPage() {
 
     setStats([
       {
-        title: "Total Lokasi Parkir",
+        title: "Total Parking Locations",
         value: totalParkir.toString(),
         change: "0%",
         trend: "up",
         icon: Car,
       },
       {
-        title: "Total Tiket",
+        title: "Total Tickets",
         value: totalTickets.toString(),
         change: "0%",
         trend: "up",
         icon: Ticket,
       },
       {
-        title: "Tiket Aktif",
+        title: "Active Tickets",
         value: activeTickets.toString(),
         change: "0%",
         trend: "up",
         icon: DollarSign,
       },
       {
-        title: "Kapasitas Terisi",
+        title: "Capacity Filled",
         value: `${capacityPercentage}`,
         change: "0%",
         trend: totalParkir > 100 ? "up" : "down",
@@ -219,13 +220,13 @@ export default function DashboardPage() {
 
   // Calculate parking status from real data
   const maxCapacity = 4;
-  const currentParkir = parkingData.length;
+  const currentParkir = parkingData.filter((p) => p.is_used === 1).length;
   const availableSlots = maxCapacity - currentParkir;
 
   const parkingStatusData = [
-    { name: "Terisi", value: currentParkir, color: "#3b82f6" },
+    { name: "Occupied", value: currentParkir, color: "#3b82f6" },
     {
-      name: "Tersedia",
+      name: "Available",
       value: availableSlots > 0 ? availableSlots : 0,
       color: "#10b981",
     },
@@ -259,8 +260,7 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
         <p className="text-gray-600 mt-1">
-          Selamat datang kembali! Berikut ringkasan aktivitas pada System
-          Parking Team.
+          Welcome to the Parking Team Information System Dashboard
         </p>
       </div>
 
@@ -277,7 +277,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-2 bg-white border border-gray-200 rounded-xl p-6">
           <div className="mb-4">
             <h2 className="text-lg font-semibold text-gray-900">
-              Pendapatan 7 Hari Terakhir
+              Last 7 Days Revenue
             </h2>
             <p className="text-sm text-gray-500 mt-1">
               Total: Rp {totalRevenue.toLocaleString("id-ID")}
@@ -310,7 +310,7 @@ export default function DashboardPage() {
         {/* Parking Status Pie Chart */}
         <div className="bg-white border border-gray-200 rounded-xl p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Status Parkir
+            Parking Status
           </h2>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
@@ -337,7 +337,7 @@ export default function DashboardPage() {
             <div className="flex justify-between items-center text-sm">
               <span className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                Terisi
+                Occupied
               </span>
               <span className="font-semibold">
                 {currentParkir} / {maxCapacity}
@@ -346,7 +346,7 @@ export default function DashboardPage() {
             <div className="flex justify-between items-center text-sm">
               <span className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                Tersedia
+                Available
               </span>
               <span className="font-semibold">
                 {availableSlots > 0 ? availableSlots : 0} / {maxCapacity}
@@ -362,17 +362,20 @@ export default function DashboardPage() {
         <div className="bg-white border border-gray-200 rounded-xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-gray-900">
-              Aktivitas Parkir Terbaru
+              Recent Parking Activities
             </h2>
-            <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
-              Lihat semua
-            </button>
+            <Link
+              href="/parkir"
+              className="text-sm font-medium text-blue-600 hover:text-blue-700"
+            >
+              View all
+            </Link>
           </div>
 
           <div className="space-y-3">
             {loading ? (
               <div className="text-center py-8 text-gray-500">
-                Loading data parkir...
+                Loading parking data...
               </div>
             ) : recentParkings.length > 0 ? (
               recentParkings.map((parking) => (
@@ -404,7 +407,7 @@ export default function DashboardPage() {
               ))
             ) : (
               <div className="text-center py-8 text-gray-500">
-                Belum ada data parkir
+                No parking data yet
               </div>
             )}
           </div>
@@ -414,17 +417,20 @@ export default function DashboardPage() {
         <div className="bg-white border border-gray-200 rounded-xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-gray-900">
-              Tiket Terbaru
+              Recent Tickets
             </h2>
-            <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
-              Lihat semua
-            </button>
+            <Link
+              href="/ticket"
+              className="text-sm font-medium text-blue-600 hover:text-blue-700"
+            >
+              View all
+            </Link>
           </div>
 
           <div className="space-y-3">
             {loading ? (
               <div className="text-center py-8 text-gray-500">
-                Loading data tiket...
+                Loading ticket data...
               </div>
             ) : recentTicketsList.length > 0 ? (
               recentTicketsList.map((ticket) => (
@@ -459,7 +465,7 @@ export default function DashboardPage() {
               ))
             ) : (
               <div className="text-center py-8 text-gray-500">
-                Belum ada data tiket
+                No ticket data yet
               </div>
             )}
           </div>
